@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#strace -e write,read -s 2000 -o >table.txt &1 2>&1
+#strace $1 | grep -E 'read'-s 2000 -o table.txt 2>$1 | column -t  #| grep -E 'read\(.* = -1|write\(.* = -1' > table.txt
+
+#program_name="yandex-browser"
+#strace -e write,read -s 2000 -o strace_output.txt "$program_name" >/dev/null 2>&1
+#grep -E '^[\d]+\s+(read|write)\(' strace_output.txt | grep -Eo '[0-9]+\s+-1\s+\w+(\s+\w+)*$' | sed -E 's/^[0-9]+\s+-1\s+//' | column -t >> table.txt
+program_name="./untitled"
+strace -e write,read -s 2000 -o strace_output.txt "$program_name" >/dev/null 2>&1
+grep -E '^(read|write)\(.*\)\s+=\s+-1' strace_output.txt | column -t > table.txt
