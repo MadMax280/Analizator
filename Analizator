@@ -1,4 +1,4 @@
 #!/bin/bash
 
 strace -o strace_output.txt "$program_name" 2>&1
-grep -E '^(read|write)\(.*\)\s+=\s+-1' strace_output.txt | column -t > table.txt
+grep -E '^(read|write)\(.*\)\s+=\s+-1' strace_output.txt | awk '{if ("read") printf "read" "\t"; else printf "write" "\t"; for (i=2; i<=NF; ++i) if ($i != "=") printf $i" "; else printf "\t"}'|sed 's/)//g;s/(//g'  > table.txt
